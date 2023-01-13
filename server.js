@@ -19,7 +19,7 @@ app.use(express.urlencoded({extended:false}))
 app.use(bodyparser.json())
 app.use(cookieParser());
 app.use(cors({
-    origin:['http://localhost:3000','https://pinvent-app.vercel.app'],
+    origin:['http://localhost:3000','https://pinvent-app-bice.vercel.app/'],
     credentials:true
 }));
 app.use(upload.array());
