@@ -1,8 +1,6 @@
 const asyncHandler=require('express-async-handler')
 const Product=require('../models/productModel');
-const { fileSizeFormatter } = require('../utils/fileupload');
 const cloudinary=require('cloudinary').v2;
-
 
 const createProduct=asyncHandler(async(req,res)=>{
     const {name,sku,category,quantity,price,description}=req.body
@@ -13,7 +11,6 @@ const createProduct=asyncHandler(async(req,res)=>{
         res.status(400)
         throw new Error("Please fill in all the fields")
     }
-
     // handle image upload
     let fileData={}
 
@@ -56,8 +53,7 @@ const createProduct=asyncHandler(async(req,res)=>{
     });
 
     res.status(201).json(product);
-});
-
+})
 
 // get all products
 const getProducts=asyncHandler(async(req,res)=>{

@@ -3,11 +3,13 @@ const express=require('express')
 const mongoose=require('mongoose')
 const bodyparser=require('body-parser')
 const cors=require('cors')
+const cookieParser=require('cookie-parser')
 const userRoute=require('./routes/userRoute')
 const productRoute=require('./routes/productRoute')
 const contactRoute=require('./routes/contactRoute')
-const cookieParser=require('cookie-parser')
-const path=require('path')
+const multer  = require('multer');
+const upload = multer();
+
 
 const app=express()
 mongoose.set("strictQuery", false);
@@ -17,20 +19,15 @@ app.use(express.urlencoded({extended:false}))
 app.use(bodyparser.json())
 app.use(cookieParser());
 app.use(cors({
-    origin:['http://localhost:3000','https://pinvent-app-bice.vercel.app'],
+    origin:['http://localhost:3000','https://pinvent-app.vercel.app'],
     credentials:true
 }));
-
-
-// point to upload folder
-app.use("/uploads",express.static(path.join(__dirname,"uploads")))
-
-
-// router middleware
+app.use(upload.array());
 
 app.use('/api/users',userRoute);
 app.use('/api/products',productRoute)
 app.use('/api/contactus',contactRoute);
+
 
 const PORT=process.env.PORT || 5000 ;
 
@@ -43,4 +40,3 @@ mongoose.connect(process.env.MONGO_URI)
         })
     })
     .catch((err)=>{console.log(err)})
-
